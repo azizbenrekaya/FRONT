@@ -1,0 +1,106 @@
+<div class="card" >
+    <div class="card-body">
+
+    <form [formGroup]="Ruleform">
+        <span class="badge badge-warning">Choose a Sensor</span>
+        <div class="row">
+            
+        <div class="col-sm-3">
+        <label >Sensor Name</label>
+        <div class="input-group">
+            <select  id="idsensor" class="form-control" formControlName="idsensor">
+                <option *ngFor='let i of alldev' [value]="i" (click)=" fillfactors(i.SensorIdentifier,i._id)">
+                  {{i.name}}
+              </option>
+              </select>
+       
+        </div>
+        </div>
+
+            <div class="col-sm-6">
+                <div role="alert" class="alert alert-info"><!----> 
+                    Once you created an Alert on a specific sensor , you will get the notifications on your email
+                </div>
+         
+            </div>
+
+
+        
+        </div>
+         <br>
+
+       <!-- <div *ngIf="factors.length != 0 " class="row"> -->
+        <div [hidden]="factors.length === 0 " class="row">
+        <div class="col-sm-3">
+        <label for="dateOfBirth">Factors</label>
+        <div class="input-group">
+        
+          <select  id="Type" class="form-control" formControlName="Type">
+            <option *ngFor='let i of factors' [value]="i" >
+              {{i}}
+          </option>
+          </select>
+        </div>
+        </div>
+
+        <div class="col-sm-3">
+            <label for="dateOfBirth">Min</label>
+            <input type="text" id="Tmin" formControlName="Tmin"  class="form-control">
+        </div>
+        <div class="col-sm-3">
+            <label for="dateOfBirth">Max</label>
+            <input type="text" id="Tmax" formControlName="Tmax"  class="form-control">
+        </div>
+
+         <br> <br>
+      
+        
+
+        </div>
+        <br>
+        <div [hidden]="factors.length === 0 " class="row">
+            <div class="col-sm-3">
+                <button type="button" aria-pressed="true" class="btn btn-block btn-outline-success active"
+                (click)="addRule()"
+                >Add</button>
+            </div>
+        </div>
+      
+    
+    </form>
+
+    <div >
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i> Alerts Table </div>
+            
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Name</th><th>Identifier</th><th>Rule</th><th>Max</th><th>Min</th><th>Actions</th></tr>
+            </thead>
+              <tbody>
+              
+                <tr *ngFor="let i of sensorswithrules">
+                    <td>{{i.Name}}</td>
+                    <td> {{i.SensorIdentifier}}</td>
+                  
+                   
+                    <td> {{i.Rule }}</td>
+                    <td> {{i.Max}} </td>
+                    <td>{{i.Min}} </td>
+                    <td> <i class="cil-pencil" ></i>    <i class="cil-delete"  style="margin-left: 10px;"></i></td>
+                     
+                    
+                    <!-- <td><button type="button" aria-pressed="true" (click)="delete(i._id)" class="btn btn-block btn-danger active">Delete</button></td> -->
+                    <!-- <td><i (click)="delete(i._id)" class="fa fa-times-rectangle-o fa-lg mt-4"></i><br><span class="text-muted"></span></td> -->
+                </tr>
+               
+              </tbody>
+           </table>
+           </div>
+
+
+
+</div>
+
+
+</div>

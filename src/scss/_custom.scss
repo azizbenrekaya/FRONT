@@ -1,0 +1,17 @@
+// Here you can add other styles
+.mapboxgl-marker {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border:1px solid gray;
+    background-color:yellow;
+}
+.carousel-control-prev-icon{
+    background-image: url("/../../assets/img/prev.jpg");
+    margin-left: -30%;
+    margin-top: 30%;
+ }
+ .carousel-control-next-icon{
+   background-image: url("/../../assets/img/next.jpg");
+   margin-top: 30%;
+ }

@@ -1,0 +1,153 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
+  <script src='https://npmcdn.com/mapbox-gl-circle/dist/mapbox-gl-circle.min.js'></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
+</head>
+
+<div class="card" style="height:1500px;" >
+   <!-- // -->
+
+   <div class="col-sm-6 " style="margin-top:20px;align-self: center;">
+   
+      <!-- <div *ngIf=""> -->
+        <div>
+          <br>
+      <form  class="form-grp"   [formGroup]="sensorform" >
+        <div class="card">
+          <div class="card-header" style="background-color: limegreen;">
+            <strong>Insert your Sensor ID so we can recognize it !   </strong>
+            
+          </div>
+        <div class="modal-body">
+          <div class="area" >
+            <div class="login">
+             
+              <div class="text-center"><img style="height: 150px; width:150px ;" src="assets/img/smartpro.png"></div>
+              
+         
+              
+           
+              <div class="modal-footer">
+                <form  class="form-grp"   [formGroup]="findform" onsubmit="" >
+                  
+                  <div class="input-group "  #input1  >
+                    <input type="text-center"class="form-control" placeholder="Sensor ID" nom id="findsensor" formControlName="sensname">
+                    <div class="input-group-prepend" >
+                     <button  (click)="findsensor()" ><span class="input-group-text" ><i class="fa fa-search "></i></span></button> 
+                    </div>
+                  </div>
+                 <br> 
+                </form>
+              </div>
+            </div>
+      
+      
+          </div >
+        </div>
+        </div>
+      </form>
+    </div>
+   
+  </div>
+
+     
+    
+  
+
+
+   <!-- // -->
+ 
+   
+
+   <!-- <div *ngIf="this.verif == true "> -->
+   <div [hidden]="this.verif == false" class="row" style="width: 100%;margin-top: -30%;">
+    <div class="col-md-6" style="margin-top:40px;width: 50%">
+
+      <div class="card-header">
+        <strong>To get global informations about the weather , the temperature or the humidity we use our high tech sensors </strong><br><br>
+        <strong>-First select the sensor's position on the map </strong><br>
+        <strong>-Continue with the sensor's details</strong><br><br>
+        
+      </div>
+     
+      <!-- <div *ngIf=""> -->
+        <div>
+          <br>
+      <form  class="form-grp"   [formGroup]="sensorform" >
+        <div class="card">
+          <div class="card-header">
+            <strong>Fill with your informations</strong>
+            
+          </div>
+        <div class="modal-body">
+          <div class="area" >
+            <div class="login">
+              <p>Sensor Name</p>
+              <div class="form-group">
+      
+                <p><input type="text" class="form-control" id="sensorname"
+                  formControlName="sensorname" aria-describedby="sensorname" placeholder="Enter name"
+                          ></p>
+              </div>
+              <label for="dateOfBirth">Site </label>
+              <div class="input-group">
+          
+                <select  id="cite" class="form-control" formControlName="site">
+                  <option *ngFor='let i of stationsdata' [value]="i" (click)="onchange(i._id)">
+                    {{i.name}}
+                </option>
+                </select>
+              </div> <br>
+              <p>Sensor Description  </p>
+              <div class="form-group">
+                <p><input type="text" class="form-control" id="description"
+                  formControlName="description" aria-describedby="description" placeholder="Description"
+                   ></p>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" (click)="sensorupdate()"  class="btn btn-block btn-success">Confirm</button>
+              </div>
+            </div>
+      
+      
+          </div >
+        </div>
+        </div>
+      </form>
+    </div>
+
+    </div>
+
+
+
+   <div class="col-md-6"  >
+    <div class="chart-wrapper" style="height:700px;margin-top:40px">
+    
+ 
+      <div >
+      
+               <div id="map-mapboxxxxxxx" style=" height: 650px;" >
+
+               </div>
+      </div>
+
+      
+    </div>
+   </div>
+
+
+   
+
+</div>
+
+
+

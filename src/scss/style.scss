@@ -1,0 +1,42 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+.mapboxgl-marker {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border:1px solid gray;
+    background-color:lightblue;
+}
+.geocoder {
+    z-index: 1;
+    margin: 20px;
+    }
+    .mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+    }
+
+    .marker {
+        background-image: url("https://cdn.iconscout.com/icon/free/png-512/train-station-1404415-1186375.png");
+        background-size: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .carousel-control-prev-icon{
+        background-image: url("/../../assets/img/prev.jpg");
+        margin-left: -30%;
+        margin-top: 30%;
+        
+     }
+     .carousel-control-next-icon{
+       background-image: url("/../../assets/img/next.jpg");
+       margin-top: 30%;
+     }

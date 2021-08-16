@@ -1,0 +1,1008 @@
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
+    <script src='https://npmcdn.com/mapbox-gl-circle/dist/mapbox-gl-circle.min.js'></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
+  
+</head>
+<div class="card" >
+  <div class="card-body">
+
+    <!-- // -->
+   <div class="row">
+  
+    <div class="col-sm-6 col-md-4">
+    <div class="card text-white bg-warning text-center">
+    <div class="card-body">
+    <blockquote class="card-bodyquote">
+      <img style="width: 40px;" src="assets/img/smartpro.png"> 3 Sensors ON
+    
+    <footer>
+      Libelium Smart Environment PRO Model
+    
+    </footer>
+    </blockquote>
+    </div>
+    </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div class="card text-white bg-danger text-center">
+    <div class="card-body">
+    <blockquote class="card-bodyquote">
+      <img style="width: 40px;" src="assets/img/site.png"> {{this.allsites.length}} Sites
+    <footer>
+    Informations depends from Site to Site
+    
+    </footer>
+    </blockquote>
+    </div>
+    </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div class="card text-white bg-primary text-center">
+    <div class="card-body">
+    <blockquote class="card-bodyquote">
+      <img style="width: 40px;" src="assets/img/station.png"> {{this.stationsdata.length}} Stations
+    <footer>
+    Every Station is affiliated to a  Site
+    
+    </footer>
+    </blockquote>
+    </div>
+    </div>
+    </div>
+    </div>
+
+   <!-- // -->
+
+    
+
+   
+
+<div class="animated fadeIn" >
+  <div style="margin-left: 20%;margin-right: 20%;">
+  <div class="row">
+  
+   
+      <div class="col-md-6"  >
+         
+         <img style="width: 40px;" src="assets/img/map.png">    Select a Site
+         <select  id="cite" class="form-control" >
+             <option *ngFor='let i of allsites' [value]="i" (click)="selectedCite(i._id)">
+                {{i.area}}
+             </option>
+         </select>
+      </div>
+      <div class="col-md-6">
+     
+         <img style="width: 40px;" src="assets/img/station.png">    Select a Station
+            <select  id="cite" class="form-control" >
+              <option *ngFor='let i of station_cite' [value]="i" (click)="selectedstation(i._id,i.lattitude,i.longitude)">
+               {{i.name}}
+              </option>
+           </select>
+      </div> <br>
+    </div>
+  </div> <!--/.row-->
+  <br><br>
+   <!-- test -->
+
+    
+
+
+
+
+
+    <carousel *ngIf="todaydata[0] != null " [noPause]="false" [noWrap]="true" [interval]="null">
+   <slide>
+   <div class="card" *ngIf="todaydata[0] != null " style="width: 100%;">
+    <h2 style="margin-left: 40px; margin-top: 10px;">Prevision</h2>
+   <div >
+    <div class="row" style="margin-left: 18px; margin-top: 40px;">
+      <div class="col-sm-3" *ngIf="todaydata[0] != null ">
+        <i *ngIf="todaydata[0].description == 'clear sky'; " ><img style="height: 100px;" src="assets/img/ClearWeather.png"></i>
+        <i *ngIf="todaydata[0].description == 'few clouds'; " ><img style=" height: 100px;" src="assets/img/Fewclouds.png"></i>
+        <i *ngIf="todaydata[0].description == 'scattered clouds'; " ><img style="height: 100px;" src="assets/img/ScatteredClouds.png"></i>
+        <i *ngIf="todaydata[0].description == 'broken clouds'; " ><img style="height: 100px;" src="assets/img/BrokenClouds.png"></i>
+        <i *ngIf="todaydata[0].description == 'light rain'; " ><img style="height: 100px;" src="assets/img/LightRain.png"></i>
+        <i *ngIf="todaydata[0].description == 'overcast clouds'; " ><img style="height: 100px;" src="assets/img/Overcast.png"></i> 
+      <h4 *ngIf="todaydata[0] != null " style="margin-left: 20px;" >{{todaydata[0].temperature}}</h4>
+      </div>
+      <div class="col-sm-3"  style="margin-left: 0px; margin-top: 30px;" *ngIf="todaydata[0] != null ">
+        <i>precipitation : {{todaydata[0].precipitation}}%</i> <br>
+        <i>humidiy : {{todaydata[0].humidite}}</i><br>
+        <i>windspeed : {{todaydata[0].windspeed}}km/h</i><br>
+      </div>
+      <div class="col-sm-6 " style="margin-top: 10px;"  *ngIf="todaydata[0] != null ">
+        <h4 *ngIf="this.nameCite != '' "> {{this.nameCite}}</h4>
+        <h4  >{{todaydata[0].date}} </h4>
+        <h4  >{{todaydata[0].day}}  {{todaydata[0].time}}</h4>
+        <h5>{{todaydata[0].weather}} , {{todaydata[0].description}}  </h5><br>
+      </div>
+      </div>
+  <div class="card-body">
+   <div class="col-sm-12 ">
+        <!-- Nav tabs -->
+        <tabset>
+          <tab heading="Température">
+            <div class="row">
+            <div *ngFor="let i of todaydata">
+              
+               <div style="margin-left: 30px;" >
+                <i *ngIf="i.description == 'clear sky'; " ><img style="height: 25px;" src="assets/img/ClearWeather.png"></i>
+                <i *ngIf="i.description == 'few clouds'; " ><img style=" height: 25px;" src="assets/img/Fewclouds.png"></i>
+                <i *ngIf="i.description == 'scattered clouds'; " ><img style="height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+                <i *ngIf="i.description == 'broken clouds'; " ><img style="height: 25px;" src="assets/img/BrokenClouds.png"></i>
+                <i *ngIf="i.description == 'light rain'; " ><img style="height: 25px;" src="assets/img/LightRain.png"></i>
+                <i *ngIf="i.description == 'overcast clouds'; " ><img style="height: 25px;" src="assets/img/Overcast.png"></i> {{i.temperature}} <br>
+                <i style="margin-left: 10px;" >{{i.time}} </i> <br>
+               </div>
+      
+               
+              </div>
+            </div>
+         
+          </tab>
+          
+          <tab heading="Vent">
+            <div class="row">
+            <div *ngFor="let i of todaydata">
+              
+               <div style="margin-left: 40px;">
+                <i  ><img style="margin-left: 10px; height: 25px;" src="assets/img/Wind.png"></i> <br> {{i.windspeed}} km/h<br>
+                <i >{{i.time}} </i>
+               </div>
+      
+               
+              </div>
+            </div>
+          </tab>
+          <tab heading="Précipitation">
+            <div class="row">
+            <div *ngFor="let i of todaydata">
+            <div style="margin-left: 60px;">
+            <i  ><img style="height: 25px;" src="assets/img/Precip.png"></i> <br> {{i.precipitation}}% <br>
+            <i >{{i.time}} </i>
+           </div>
+          </div>
+           </div>
+          </tab>
+
+          <tab heading="Humidity">
+            <div class="row"> 
+            <div *ngFor="let i of todaydata">
+              
+               <div style="margin-left: 40px;">
+                <i  ><img style=" height: 25px;" src="assets/img/Humidity.png"></i> <br> {{i.humidite}} <br>
+                <i >{{i.time}} </i>
+               </div>
+      
+               
+              </div>
+            </div>
+          </tab>
+        </tabset>
+      </div><!--/.col-->
+ 
+   
+
+</div> 
+</div>
+</div>
+<div class="carousel-caption d-none d-md-block">
+
+</div>
+</slide>
+<!-- slide2 -->
+<slide> 
+  <div class="card" *ngIf="todaydata[0] != null " style="width: 100%;">
+   <h2 style="margin-left: 40px; margin-top: 10px;">Prevision </h2>
+  <div >
+   <div class="row" style="margin-left: 18px; margin-top: 40px;">
+     <div class="col-sm-3" *ngIf="todaydata[0] != null ">
+       <i *ngIf="secondday[0].description == 'clear sky'; " ><img style="height: 100px;" src="assets/img/ClearWeather.png"></i>
+       <i *ngIf="secondday[0].description == 'few clouds'; " ><img style=" height: 100px;" src="assets/img/Fewclouds.png"></i>
+       <i *ngIf="secondday[0].description == 'scattered clouds'; " ><img style="height: 100px;" src="assets/img/ScatteredClouds.png"></i>
+       <i *ngIf="secondday[0].description == 'broken clouds'; " ><img style="height: 100px;" src="assets/img/BrokenClouds.png"></i>
+       <i *ngIf="secondday[0].description == 'light rain'; " ><img style="height: 100px;" src="assets/img/LightRain.png"></i>
+       <i *ngIf="secondday[0].description == 'overcast clouds'; " ><img style="height: 100px;" src="assets/img/Overcast.png"></i> 
+     <h4 *ngIf="secondday[0] != null " style="margin-left: 20px;" >{{secondday[0].temperature}}</h4>
+     </div>
+     <div class="col-sm-3"  style="margin-left: 0px; margin-top: 30px;" *ngIf="secondday[0] != null ">
+       <i>precipitation : {{secondday[0].precipitation}}%</i> <br>
+       <i>humidiy : {{secondday[0].humidite}}</i><br>
+       <i>windspeed : {{secondday[0].windspeed}}km/h</i><br>
+     </div>
+     <div class="col-sm-6 " style="margin-top: 10px;"  *ngIf="todaydata[0] != null ">
+       <h4 *ngIf="this.nameCite != '' "> {{this.nameCite}}</h4>
+       <h4  >{{secondday[0].date}} </h4>
+       <h4  >{{secondday[0].day}}  {{secondday[0].time}}</h4>
+       <h5>{{secondday[0].weather}} , {{secondday[0].description}}  </h5><br>
+     </div>
+     </div>
+ <div class="card-body">
+  <div class="col-sm-12 ">
+       <!-- Nav tabs -->
+       <tabset>
+         <tab heading="Température">
+           <div class="row">
+           <div *ngFor="let i of secondday">
+             
+              <div style="margin-left: 30px;" >
+               <i *ngIf="i.description == 'clear sky'; " ><img style="height: 25px;" src="assets/img/ClearWeather.png"></i>
+               <i *ngIf="i.description == 'few clouds'; " ><img style=" height: 25px;" src="assets/img/Fewclouds.png"></i>
+               <i *ngIf="i.description == 'scattered clouds'; " ><img style="height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+               <i *ngIf="i.description == 'broken clouds'; " ><img style="height: 25px;" src="assets/img/BrokenClouds.png"></i>
+               <i *ngIf="i.description == 'light rain'; " ><img style="height: 25px;" src="assets/img/LightRain.png"></i>
+               <i *ngIf="i.description == 'overcast clouds'; " ><img style="height: 25px;" src="assets/img/Overcast.png"></i> {{i.temperature}} <br>
+               <i style="margin-left: 10px;" >{{i.time}} </i> <br>
+              </div>
+     
+              
+             </div>
+           </div>
+        
+         </tab>
+         
+         <tab heading="Vent">
+           <div class="row">
+           <div *ngFor="let i of secondday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style="margin-left: 10px; height: 25px;" src="assets/img/Wind.png"></i> <br> {{i.windspeed}} km/h<br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+         <tab heading="Précipitation">
+           <div class="row">
+           <div *ngFor="let i of secondday">
+           <div style="margin-left: 60px;">
+           <i  ><img style="height: 25px;" src="assets/img/Precip.png"></i> <br> {{i.precipitation}}% <br>
+           <i >{{i.time}} </i>
+          </div>
+         </div>
+          </div>
+         </tab>
+
+         <tab heading="Humidity">
+           <div class="row"> 
+           <div *ngFor="let i of secondday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style=" height: 25px;" src="assets/img/Humidity.png"></i> <br> {{i.humidite}} <br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+       </tabset>
+     </div><!--/.col-->
+
+  
+
+</div> 
+</div>
+</div>
+<div class="carousel-caption d-none d-md-block">
+
+</div>
+</slide>
+<!-- slide3 -->
+<slide>
+  <div class="card" *ngIf="thirdday[0] != null " style="width: 100%;">
+   <h2 style="margin-left: 40px; margin-top: 10px;">Prevision </h2>
+  <div >
+   <div class="row" style="margin-left: 18px; margin-top: 40px;">
+     <div class="col-sm-3" *ngIf="todaydata[0] != null ">
+       <i *ngIf="thirdday[0].description == 'clear sky'; " ><img style="height: 100px;" src="assets/img/ClearWeather.png"></i>
+       <i *ngIf="thirdday[0].description == 'few clouds'; " ><img style=" height: 100px;" src="assets/img/Fewclouds.png"></i>
+       <i *ngIf="thirdday[0].description == 'scattered clouds'; " ><img style="height: 100px;" src="assets/img/ScatteredClouds.png"></i>
+       <i *ngIf="thirdday[0].description == 'broken clouds'; " ><img style="height: 100px;" src="assets/img/BrokenClouds.png"></i>
+       <i *ngIf="thirdday[0].description == 'light rain'; " ><img style="height: 100px;" src="assets/img/LightRain.png"></i>
+       <i *ngIf="thirdday[0].description == 'overcast clouds'; " ><img style="height: 100px;" src="assets/img/Overcast.png"></i> 
+     <h4 *ngIf="thirdday[0] != null " style="margin-left: 20px;" >{{thirdday[0].temperature}}</h4>
+     </div>
+     <div class="col-sm-3"  style="margin-left: 0px; margin-top: 30px;" *ngIf="thirdday[0] != null ">
+       <i>precipitation : {{thirdday[0].precipitation}}%</i> <br>
+       <i>humidiy : {{thirdday[0].humidite}}</i><br>
+       <i>windspeed : {{thirdday[0].windspeed}}km/h</i><br>
+     </div>
+     <div class="col-sm-6 " style="margin-top: 10px;"  *ngIf="todaydata[0] != null ">
+       <h4 *ngIf="this.nameCite != '' "> {{this.nameCite}}</h4>
+       <h4  >{{thirdday[0].date}} </h4>
+       <h4  >{{thirdday[0].day}}  {{thirdday[0].time}}</h4>
+       <h5>{{thirdday[0].weather}} , {{thirdday[0].description}}  </h5><br>
+     </div>
+     </div>
+ <div class="card-body">
+  <div class="col-sm-12 ">
+       <!-- Nav tabs -->
+       <tabset>
+         <tab heading="Température">
+           <div class="row">
+           <div *ngFor="let i of thirdday">
+             
+              <div style="margin-left: 30px;" >
+               <i *ngIf="i.description == 'clear sky'; " ><img style="height: 25px;" src="assets/img/ClearWeather.png"></i>
+               <i *ngIf="i.description == 'few clouds'; " ><img style=" height: 25px;" src="assets/img/Fewclouds.png"></i>
+               <i *ngIf="i.description == 'scattered clouds'; " ><img style="height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+               <i *ngIf="i.description == 'broken clouds'; " ><img style="height: 25px;" src="assets/img/BrokenClouds.png"></i>
+               <i *ngIf="i.description == 'light rain'; " ><img style="height: 25px;" src="assets/img/LightRain.png"></i>
+               <i *ngIf="i.description == 'overcast clouds'; " ><img style="height: 25px;" src="assets/img/Overcast.png"></i> {{i.temperature}} <br>
+               <i style="margin-left: 10px;" >{{i.time}} </i> <br>
+              </div>
+     
+              
+             </div>
+           </div>
+        
+         </tab>
+         
+         <tab heading="Vent">
+           <div class="row">
+           <div *ngFor="let i of thirdday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style="margin-left: 10px; height: 25px;" src="assets/img/Wind.png"></i> <br> {{i.windspeed}} km/h<br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+         <tab heading="Précipitation">
+           <div class="row">
+           <div *ngFor="let i of thirdday">
+           <div style="margin-left: 60px;">
+           <i  ><img style="height: 25px;" src="assets/img/Precip.png"></i> <br> {{i.precipitation}}% <br>
+           <i >{{i.time}} </i>
+          </div>
+         </div>
+          </div>
+         </tab>
+
+         <tab heading="Humidity">
+           <div class="row"> 
+           <div *ngFor="let i of thirdday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style=" height: 25px;" src="assets/img/Humidity.png"></i> <br> {{i.humidite}} <br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+       </tabset>
+     </div><!--/.col-->
+
+  
+
+</div> 
+</div>
+</div>
+<div class="carousel-caption d-none d-md-block">
+
+</div>
+</slide>
+<!-- slide4 -->
+<slide>
+  <div class="card" *ngIf="fourthday[0] != null " style="width: 100%;">
+   <h2 style="margin-left: 40px; margin-top: 10px;">Prevision </h2>
+  <div >
+   <div class="row" style="margin-left: 18px; margin-top: 40px;">
+     <div class="col-sm-3" *ngIf="todaydata[0] != null ">
+       <i *ngIf="fourthday[0].description == 'clear sky'; " ><img style="height: 100px;" src="assets/img/ClearWeather.png"></i>
+       <i *ngIf="fourthday[0].description == 'few clouds'; " ><img style=" height: 100px;" src="assets/img/Fewclouds.png"></i>
+       <i *ngIf="fourthday[0].description == 'scattered clouds'; " ><img style="height: 100px;" src="assets/img/ScatteredClouds.png"></i>
+       <i *ngIf="fourthday[0].description == 'broken clouds'; " ><img style="height: 100px;" src="assets/img/BrokenClouds.png"></i>
+       <i *ngIf="fourthday[0].description == 'light rain'; " ><img style="height: 100px;" src="assets/img/LightRain.png"></i>
+       <i *ngIf="fourthday[0].description == 'overcast clouds'; " ><img style="height: 100px;" src="assets/img/Overcast.png"></i> 
+     <h4 *ngIf="fourthday[0] != null " style="margin-left: 20px;" >{{fourthday[0].temperature}}</h4>
+     </div>
+     <div class="col-sm-3"  style="margin-left: 0px; margin-top: 30px;" *ngIf="todaydata[0] != null ">
+       <i>precipitation : {{fourthday[0].precipitation}}%</i> <br>
+       <i>humidiy : {{fourthday[0].humidite}}</i><br>
+       <i>windspeed : {{fourthday[0].windspeed}}km/h</i><br>
+     </div>
+     <div class="col-sm-6 " style="margin-top: 10px;"  *ngIf="fourthday[0] != null ">
+       <h4 *ngIf="this.nameCite != '' "> {{this.nameCite}}</h4>
+       <h4  >{{fourthday[0].date}} </h4>
+       <h4  >{{fourthday[0].day}}  {{fourthday[0].time}}</h4>
+       <h5>{{fourthday[0].weather}} , {{fourthday[0].description}}  </h5><br>
+     </div>
+     </div>
+ <div class="card-body">
+  <div class="col-sm-12 ">
+       <!-- Nav tabs -->
+       <tabset>
+         <tab heading="Température">
+           <div class="row">
+           <div *ngFor="let i of fourthday ">
+             
+              <div style="margin-left: 30px;" >
+               <i *ngIf="i.description == 'clear sky'; " ><img style="height: 25px;" src="assets/img/ClearWeather.png"></i>
+               <i *ngIf="i.description == 'few clouds'; " ><img style=" height: 25px;" src="assets/img/Fewclouds.png"></i>
+               <i *ngIf="i.description == 'scattered clouds'; " ><img style="height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+               <i *ngIf="i.description == 'broken clouds'; " ><img style="height: 25px;" src="assets/img/BrokenClouds.png"></i>
+               <i *ngIf="i.description == 'light rain'; " ><img style="height: 25px;" src="assets/img/LightRain.png"></i>
+               <i *ngIf="i.description == 'overcast clouds'; " ><img style="height: 25px;" src="assets/img/Overcast.png"></i> {{i.temperature}} <br>
+               <i style="margin-left: 10px;" >{{i.time}} </i> <br>
+              </div>
+     
+              
+             </div>
+           </div>
+        
+         </tab>
+         
+         <tab heading="Vent">
+           <div class="row">
+           <div *ngFor="let i of fourthday ">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style="margin-left: 10px; height: 25px;" src="assets/img/Wind.png"></i> <br> {{i.windspeed}} km/h<br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+         <tab heading="Précipitation">
+           <div class="row">
+           <div *ngFor="let i of fourthday ">
+           <div style="margin-left: 60px;">
+           <i  ><img style="height: 25px;" src="assets/img/Precip.png"></i> <br> {{i.precipitation}}% <br>
+           <i >{{i.time}} </i>
+          </div>
+         </div>
+          </div>
+         </tab>
+
+         <tab heading="Humidity">
+           <div class="row"> 
+           <div *ngFor="let i of fourthday ">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style=" height: 25px;" src="assets/img/Humidity.png"></i> <br> {{i.humidite}} <br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+       </tabset>
+     </div><!--/.col-->
+
+  
+
+</div> 
+</div>
+</div>
+<div class="carousel-caption d-none d-md-block">
+
+</div>
+</slide>
+<!-- slide 5 -->
+<slide>
+  <div class="card" *ngIf="fifthday[0] != null " style="width: 100%;">
+   <h2 style="margin-left: 40px; margin-top: 10px;">Prevision </h2>
+  <div >
+   <div class="row" style="margin-left: 18px; margin-top: 40px;">
+     <div class="col-sm-3" *ngIf="todaydata[0] != null ">
+       <i *ngIf="fifthday[0].description == 'clear sky'; " ><img style="height: 100px;" src="assets/img/ClearWeather.png"></i>
+       <i *ngIf="fifthday[0].description == 'few clouds'; " ><img style=" height: 100px;" src="assets/img/Fewclouds.png"></i>
+       <i *ngIf="fifthday[0].description == 'scattered clouds'; " ><img style="height: 100px;" src="assets/img/ScatteredClouds.png"></i>
+       <i *ngIf="fifthday[0].description == 'broken clouds'; " ><img style="height: 100px;" src="assets/img/BrokenClouds.png"></i>
+       <i *ngIf="fifthday[0].description == 'light rain'; " ><img style="height: 100px;" src="assets/img/LightRain.png"></i>
+       <i *ngIf="fifthday[0].description == 'overcast clouds'; " ><img style="height: 100px;" src="assets/img/Overcast.png"></i> 
+     <h4 *ngIf="fifthday[0] != null " style="margin-left: 20px;" >{{fifthday[0].temperature}}</h4>
+     </div>
+     <div class="col-sm-3"  style="margin-left: 0px; margin-top: 30px;" *ngIf="fifthday[0] != null ">
+       <i>precipitation : {{fifthday[0].precipitation}}%</i> <br>
+       <i>humidiy : {{fifthday[0].humidite}}</i><br>
+       <i>windspeed : {{fifthday[0].windspeed}}km/h</i><br>
+     </div>
+     <div class="col-sm-6 " style="margin-top: 10px;"  *ngIf="todaydata[0] != null ">
+       <h4 *ngIf="this.nameCite != '' "> {{this.nameCite}}</h4>
+       <h4  >{{fifthday[0].date}} </h4>
+       <h4  >{{fifthday[0].day}}  {{fifthday[0].time}}</h4>
+       <h5>{{fifthday[0].weather}} , {{fifthday[0].description}}  </h5><br>
+     </div>
+     </div>
+ <div class="card-body">
+  <div class="col-sm-12 ">
+       <!-- Nav tabs -->
+       <tabset>
+         <tab heading="Température">
+           <div class="row">
+           <div *ngFor="let i of fifthday">
+             
+              <div style="margin-left: 30px;" >
+               <i *ngIf="i.description == 'clear sky'; " ><img style="height: 25px;" src="assets/img/ClearWeather.png"></i>
+               <i *ngIf="i.description == 'few clouds'; " ><img style=" height: 25px;" src="assets/img/Fewclouds.png"></i>
+               <i *ngIf="i.description == 'scattered clouds'; " ><img style="height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+               <i *ngIf="i.description == 'broken clouds'; " ><img style="height: 25px;" src="assets/img/BrokenClouds.png"></i>
+               <i *ngIf="i.description == 'light rain'; " ><img style="height: 25px;" src="assets/img/LightRain.png"></i>
+               <i *ngIf="i.description == 'overcast clouds'; " ><img style="height: 25px;" src="assets/img/Overcast.png"></i> {{i.temperature}} <br>
+               <i style="margin-left: 10px;" >{{i.time}} </i> <br>
+              </div>
+     
+              
+             </div>
+           </div>
+        
+         </tab>
+         
+         <tab heading="Vent">
+           <div class="row">
+           <div *ngFor="let i of fifthday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style="margin-left: 10px; height: 25px;" src="assets/img/Wind.png"></i> <br> {{i.windspeed}} km/h<br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+         <tab heading="Précipitation">
+           <div class="row">
+           <div *ngFor="let i of fifthday">
+           <div style="margin-left: 60px;">
+           <i  ><img style="height: 25px;" src="assets/img/Precip.png"></i> <br> {{i.precipitation}}% <br>
+           <i >{{i.time}} </i>
+          </div>
+         </div>
+          </div>
+         </tab>
+
+         <tab heading="Humidity">
+           <div class="row"> 
+           <div *ngFor="let i of fifthday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style=" height: 25px;" src="assets/img/Humidity.png"></i> <br> {{i.humidite}} <br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+       </tabset>
+     </div><!--/.col-->
+
+  
+
+</div> 
+</div>
+</div>
+<div class="carousel-caption d-none d-md-block">
+
+</div>
+</slide>
+<!-- slide6 -->
+<slide>
+  <div class="card" *ngIf="lastday[0] != null " style="width: 100%;">
+   <h2 style="margin-left: 40px; margin-top: 10px;">Prevision </h2>
+  <div >
+   <div class="row" style="margin-left: 18px; margin-top: 40px;">
+     <div class="col-sm-3" *ngIf="todaydata[0] != null ">
+       <i *ngIf="lastday[0].description == 'clear sky'; " ><img style="height: 100px;" src="assets/img/ClearWeather.png"></i>
+       <i *ngIf="lastday[0].description == 'few clouds'; " ><img style=" height: 100px;" src="assets/img/Fewclouds.png"></i>
+       <i *ngIf="lastday[0].description == 'scattered clouds'; " ><img style="height: 100px;" src="assets/img/ScatteredClouds.png"></i>
+       <i *ngIf="lastday[0].description == 'broken clouds'; " ><img style="height: 100px;" src="assets/img/BrokenClouds.png"></i>
+       <i *ngIf="lastday[0].description == 'light rain'; " ><img style="height: 100px;" src="assets/img/LightRain.png"></i>
+       <i *ngIf="lastday[0].description == 'overcast clouds'; " ><img style="height: 100px;" src="assets/img/Overcast.png"></i> 
+     <h4 *ngIf="lastday[0] != null " style="margin-left: 20px;" >{{lastday[0].temperature}}</h4>
+     </div>
+     <div class="col-sm-3"  style="margin-left: 0px; margin-top: 30px;" *ngIf="lastday[0] != null ">
+       <i>precipitation : {{lastday[0].precipitation}}%</i> <br>
+       <i>humidiy : {{lastday[0].humidite}}</i><br>
+       <i>windspeed : {{lastday[0].windspeed}}km/h</i><br>
+     </div>
+     <div class="col-sm-6 " style="margin-top: 10px;"  *ngIf="todaydata[0] != null ">
+       <h4 *ngIf="this.nameCite != '' "> {{this.nameCite}}</h4>
+       <h4  >{{lastday[0].date}} </h4>
+       <h4  >{{lastday[0].day}}  {{lastday[0].time}}</h4>
+       <h5>{{lastday[0].weather}} , {{lastday[0].description}}  </h5><br>
+     </div>
+     </div>
+ <div class="card-body">
+  <div class="col-sm-12 ">
+       <!-- Nav tabs -->
+       <tabset>
+         <tab heading="Température">
+           <div class="row">
+           <div *ngFor="let i of lastday">
+             
+              <div style="margin-left: 30px;" >
+               <i *ngIf="i.description == 'clear sky'; " ><img style="height: 25px;" src="assets/img/ClearWeather.png"></i>
+               <i *ngIf="i.description == 'few clouds'; " ><img style=" height: 25px;" src="assets/img/Fewclouds.png"></i>
+               <i *ngIf="i.description == 'scattered clouds'; " ><img style="height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+               <i *ngIf="i.description == 'broken clouds'; " ><img style="height: 25px;" src="assets/img/BrokenClouds.png"></i>
+               <i *ngIf="i.description == 'light rain'; " ><img style="height: 25px;" src="assets/img/LightRain.png"></i>
+               <i *ngIf="i.description == 'overcast clouds'; " ><img style="height: 25px;" src="assets/img/Overcast.png"></i> {{i.temperature}} <br>
+               <i style="margin-left: 10px;" >{{i.time}} </i> <br>
+              </div>
+     
+              
+             </div>
+           </div>
+        
+         </tab>
+         
+         <tab heading="Vent">
+           <div class="row">
+           <div *ngFor="let i of lastday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style="margin-left: 10px; height: 25px;" src="assets/img/Wind.png"></i> <br> {{i.windspeed}} km/h<br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+         <tab heading="Précipitation">
+           <div class="row">
+           <div *ngFor="let i of lastday">
+           <div style="margin-left: 60px;">
+           <i  ><img style="height: 25px;" src="assets/img/Precip.png"></i> <br> {{i.precipitation}}% <br>
+           <i >{{i.time}} </i>
+          </div>
+         </div>
+          </div>
+         </tab>
+
+         <tab heading="Humidity">
+           <div class="row"> 
+           <div *ngFor="let i of lastday">
+             
+              <div style="margin-left: 40px;">
+               <i  ><img style=" height: 25px;" src="assets/img/Humidity.png"></i> <br> {{i.humidite}} <br>
+               <i >{{i.time}} </i>
+              </div>
+     
+              
+             </div>
+           </div>
+         </tab>
+       </tabset>
+     </div><!--/.col-->
+
+  
+
+</div> 
+</div>
+</div>
+<div class="carousel-caption d-none d-md-block">
+
+</div>
+</slide>
+</carousel>
+
+
+  <br><br>
+
+
+
+
+
+
+   <!-- endtest -->
+  <!-- <div class="card" *ngIf="todaydata[0] != null " style="width: 100%;">
+    <h2 style="margin-left: 40px; margin-top: 10px;">Prevision</h2>
+   <div >
+    <div class="row" style="margin-left: 18px; margin-top: 40px;">
+      <div class="col-sm-3" *ngIf="todaydata[0] != null ">
+        <i *ngIf="todaydata[0].description == 'clear sky'; " ><img style="height: 100px;" src="assets/img/ClearWeather.png"></i>
+        <i *ngIf="todaydata[0].description == 'few clouds'; " ><img style=" height: 100px;" src="assets/img/Fewclouds.png"></i>
+        <i *ngIf="todaydata[0].description == 'scattered clouds'; " ><img style="height: 100px;" src="assets/img/ScatteredClouds.png"></i>
+        <i *ngIf="todaydata[0].description == 'broken clouds'; " ><img style="height: 100px;" src="assets/img/BrokenClouds.png"></i>
+        <i *ngIf="todaydata[0].description == 'light rain'; " ><img style="height: 100px;" src="assets/img/LightRain.png"></i>
+        <i *ngIf="todaydata[0].description == 'overcast clouds'; " ><img style="height: 100px;" src="assets/img/Overcast.png"></i> 
+      <h4 *ngIf="todaydata[0] != null " style="margin-left: 20px;" >{{secondday[0].temperature}}</h4>
+      </div>
+      <div class="col-sm-3"  style="margin-left: 0px; margin-top: 30px;" *ngIf="todaydata[0] != null ">
+        <i>precipitation : {{todaydata[0].precipitation}}%</i> <br>
+        <i>humidiy : {{todaydata[0].humidite}}</i><br>
+        <i>windspeed : {{todaydata[0].windspeed}}km/h</i><br>
+      </div>
+      <div class="col-sm-6 " style="margin-top: 10px;"  *ngIf="todaydata[0] != null ">
+        <h4 *ngIf="this.nameCite != '' "> {{this.nameCite}}</h4>
+        <h4  >{{todaydata[0].date}} </h4>
+        <h4  >{{todaydata[0].day}}  {{todaydata[0].time}}</h4>
+        <h5>{{todaydata[0].weather}} , {{todaydata[0].description}}  </h5><br>
+      </div>
+      </div>
+    <div class="card-body"> 
+      <div class="col-sm-12 ">
+        
+        <tabset>
+          <tab heading="Température">
+            <div class="row">
+            <div *ngFor="let i of todaydata">
+              
+               <div style="margin-left: 30px;" >
+                <i *ngIf="i.description == 'clear sky'; " ><img style="height: 25px;" src="assets/img/ClearWeather.png"></i>
+                <i *ngIf="i.description == 'few clouds'; " ><img style=" height: 25px;" src="assets/img/Fewclouds.png"></i>
+                <i *ngIf="i.description == 'scattered clouds'; " ><img style="height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+                <i *ngIf="i.description == 'broken clouds'; " ><img style="height: 25px;" src="assets/img/BrokenClouds.png"></i>
+                <i *ngIf="i.description == 'light rain'; " ><img style="height: 25px;" src="assets/img/LightRain.png"></i>
+                <i *ngIf="i.description == 'overcast clouds'; " ><img style="height: 25px;" src="assets/img/Overcast.png"></i> {{i.temperature}} <br>
+                <i style="margin-left: 10px;" >{{i.time}} </i> <br>
+               </div>
+      
+               
+              </div>
+            </div>
+         
+          </tab>
+          
+          <tab heading="Vent">
+            <div class="row">
+            <div *ngFor="let i of todaydata">
+              
+               <div style="margin-left: 40px;">
+                <i  ><img style="margin-left: 10px; height: 25px;" src="assets/img/Wind.png"></i> <br> {{i.windspeed}} km/h<br>
+                <i >{{i.time}} </i>
+               </div>
+      
+               
+              </div>
+            </div>
+          </tab>
+          <tab heading="Précipitation">
+            <div class="row">
+            <div *ngFor="let i of todaydata">
+            <div style="margin-left: 60px;">
+            <i  ><img style="height: 25px;" src="assets/img/Precip.png"></i> <br> {{i.precipitation}}% <br>
+            <i >{{i.time}} </i>
+           </div>
+          </div>
+           </div>
+          </tab>
+
+          <tab heading="Humidity">
+            <div class="row"> 
+            <div *ngFor="let i of todaydata">
+              
+               <div style="margin-left: 40px;">
+                <i  ><img style=" height: 25px;" src="assets/img/Humidity.png"></i> <br> {{i.humidite}} <br>
+                <i >{{i.time}} </i>
+               </div>
+      
+               
+              </div>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+     
+     </div>
+      <button  style="height: 75px;margin-left: 35px; margin-bottom: 30px;" (click)="showprevision()" type="button" class="btn btn-primary">Check 5 Days Previsions </button>
+      <table class="table table-striped" *ngIf="this.showtable == true">
+        <thead>
+         
+        </thead>
+        <tbody>
+          
+            <tr >
+              <td *ngIf="this.day1 != '' ">{{ this.day1}}</td>
+              <td *ngFor="let i of secondday" ><i style="margin-left: -4px;" >{{i.time}} </i> <br>
+                <i style="margin-left: -4px;" >{{i.description}} </i> <br>
+                <i *ngIf="i.description == 'clear sky'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ClearWeather.png"></i>
+                <i *ngIf="i.description == 'few clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Fewclouds.png"></i>
+                <i *ngIf="i.description == 'scattered clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+                <i *ngIf="i.description == 'broken clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/BrokenClouds.png"></i>
+                <i *ngIf="i.description == 'light rain'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/LightRain.png"></i>
+                <i *ngIf="i.description == 'overcast clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Overcast.png"></i>
+              
+                 {{i.temperature}}  <br> <i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Wind.png"></i> {{i.windspeed}}  km/h <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Humidity.png"></i> {{i.humidite}}
+                <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Precip.png"></i>  {{i.precipitation}}% </td>
+            </tr>
+            <tr >
+              <td *ngIf="this.day2 != '' ">{{ this.day2}}</td>
+              <td *ngFor="let i of thirdday" ><i style="margin-left: -4px;" >{{i.time}} </i> <br>
+                <i style="margin-left: -4px;" >{{i.description}} </i> <br>
+                <i *ngIf="i.description == 'clear sky'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ClearWeather.png"></i>
+                <i *ngIf="i.description == 'few clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Fewclouds.png"></i>
+                <i *ngIf="i.description == 'scattered clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+                <i *ngIf="i.description == 'broken clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/BrokenClouds.png"></i>
+                <i *ngIf="i.description == 'light rain'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/LightRain.png"></i>
+                <i *ngIf="i.description == 'overcast clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Overcast.png"></i>
+
+                {{i.temperature}}<br>  <i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Wind.png"></i>   {{i.windspeed}} km/h   <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Humidity.png"></i>  {{i.humidite}}
+                <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Precip.png"></i>  {{i.precipitation}}%  </td>
+            </tr>
+            <tr >
+              <td *ngIf="this.day3 != ''">{{ this.day3}}</td>
+              <td *ngFor="let i of fourthday" ><i style="margin-left: -4px;" >{{i.time}} </i> <br>
+                <i style="margin-left: -4px;" >{{i.description}} </i> <br>
+                <i *ngIf="i.description == 'clear sky'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ClearWeather.png"></i>
+                <i *ngIf="i.description == 'few clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Fewclouds.png"></i>
+                <i *ngIf="i.description == 'scattered clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+                <i *ngIf="i.description == 'broken clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/BrokenClouds.png"></i>
+                <i *ngIf="i.description == 'light rain'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/LightRain.png"></i>
+                <i *ngIf="i.description == 'overcast clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Overcast.png"></i>
+                {{i.temperature}}  <br> <i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Wind.png"></i> {{i.windspeed}} km/h  <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Humidity.png"></i>  {{i.humidite}}
+                 <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Precip.png"></i>  {{i.precipitation}}% </td>
+            </tr>
+            <tr >
+              <td *ngIf="this.day4 != '' ">{{ this.day4}}</td>
+              <td *ngFor="let i of fifthday" ><i style="margin-left: -4px;" >{{i.time}} </i> <br>
+                <i style="margin-left: -4px;" >{{i.description}} </i> <br>
+                <i *ngIf="i.description == 'clear sky'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ClearWeather.png"></i>
+                <i *ngIf="i.description == 'few clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Fewclouds.png"></i>
+                <i *ngIf="i.description == 'scattered clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+                <i *ngIf="i.description == 'broken clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/BrokenClouds.png"></i>
+                <i *ngIf="i.description == 'light rain'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/LightRain.png"></i>
+                <i *ngIf="i.description == 'overcast clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Overcast.png"></i>
+                {{i.temperature}}  <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Wind.png"></i>  {{i.windspeed}} km/h  <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Humidity.png"></i>  {{i.humidite}}
+               <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Precip.png"></i>  {{i.precipitation}}%  </td>
+            </tr>
+            <tr>
+              <td *ngIf="this.day5 != '' ">{{ this.day5}}</td>
+              
+              <td *ngFor="let i of lastday" ><i style="margin-left: -4px;" >{{i.time}} </i> <br>
+                <i style="margin-left: -4px;" >{{i.description}} </i> <br>
+                <i *ngIf="i.description == 'clear sky'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ClearWeather.png"></i>
+                <i *ngIf="i.description == 'few clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Fewclouds.png"></i>
+                <i *ngIf="i.description == 'scattered clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/ScatteredClouds.png"></i>
+                <i *ngIf="i.description == 'broken clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/BrokenClouds.png"></i>
+                <i *ngIf="i.description == 'light rain'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/LightRain.png"></i>
+                <i *ngIf="i.description == 'overcast clouds'; " ><img style="margin-left: -10px; height: 25px;" src="assets/img/Overcast.png"></i>
+                {{i.temperature}}  <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Wind.png"></i>  {{i.windspeed}} km/h  <br><i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Humidity.png"></i>  {{i.humidite}}
+                <br> <i  ><img style="margin-left: -10px; height: 25px;" src="assets/img/Precip.png"></i>  {{i.precipitation}}%  </td>
+            </tr>
+
+            
+           
+        </tbody>
+        <br>
+        <button  style="height: 75px;margin-left: 35px; margin-bottom: 30px;" (click)="hideprevision()" type="button" class="btn btn-primary">Hide Previsions</button>
+    </table>
+      </div>
+      </div>
+      </div>
+    </div> -->
+  <div class="animated fadeIn">
+    
+    <div class="card-body">
+      <div class="row">
+      
+        <div  class="col-sm-7 d-none d-md-block">
+          
+           
+
+          <button type="button" class="btn btn-primary float-right"><i class="icon-cloud-download"></i></button>
+          <div class="btn-group btn-group-toggle float-right mr-3" data-toggle="buttons">
+            <div class="" >
+              
+              <form    [formGroup]="dateForm"  >
+              <input type="text" formControlName="date"
+              (ngModelChange)="getdataperstation()"
+              
+                     placeholder="Datepicker" 
+                    id="date"
+                    
+                     [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                     bsDatepicker> </form>
+            </div>
+          </div>
+        </div><!--/.col-->
+      </div><!--/.row-->
+      <br>
+      <div  *ngIf="this.maxtemp != null"class="row">
+        <div class="col-sm-12 " style="margin-bottom: 40px;" >
+         
+        <div *ngIf="this.alldata.length != 2"   class="chart-wrapper" style="margin-top:40px; ">
+         
+          
+         <canvas baseChart class="chart"
+        [datasets]="mainChartData"
+        [labels]="mainChartLabels"
+        [options]="mainChartOptions"
+        [colors]="mainChartColours"
+        [legend]="title"
+        [chartType]="mainChartType"></canvas> 
+
+
+        
+        </div> 
+        
+    </div> 
+    
+  
+      <br>
+    
+       
+      </div>
+      <div *ngIf="this.alldata.length === 2" >
+        <div class="row"> 
+          <div class="col-sm-6" style="margin-bottom: 40px;" >
+           
+          
+                            <div class="card">
+            <div class="card-header">
+              <strong>Sensor : {{this.Libelium1name}}</strong>
+              
+            </div>
+                            <div class="modal-body">
+            <canvas baseChart class="chart" height="300px"
+              
+           [datasets]="Libelium1chartData"
+           [labels]="Libelium1chartLabels"
+          
+           [colors]="Libelium1ChartColours"
+           [legend]="title"
+           [chartType]="Libelium1chartType"></canvas> 
+   
+   
+           <div class="modal-footer">
+            <center><strong>Batterie Level  : {{this.Libelium1batterie }}%  <i  class="cil-battery-full" ></i></strong></center>
+          </div>
+                              </div>
+                            </div>
+           </div> 
+           <div class="col-sm-6" style="margin-bottom: 40px;" >
+           
+            <div class="card">
+              <div class="card-header">
+                <strong>Sensor : {{this.Libelium2name}}</strong>
+                
+              </div>
+                              <div class="modal-body">
+             
+              
+             <canvas baseChart class="chart" height="300px" 
+            [datasets]="Libelium2chartData"
+            [labels]="Libelium2chartLabels"
+            
+            [colors]="Libelium2ChartColours"
+            [legend]="title"
+            [chartType]="Libelium2chartType"></canvas> 
+    
+            <div class="modal-footer">
+              <center><strong>Batterie Level  : {{this.Libelium2batterie }}%  <i  class="cil-battery-full" ></i></strong></center>
+            </div>
+                                </div>
+                              </div>
+            
+            </div> 
+           
+       </div> 
+        </div>
+      </div>
+
+    </div>
+ 
+  </div>
+  <!--/.card-->
+  
+  
+</div>

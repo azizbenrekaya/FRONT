@@ -1,0 +1,118 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
+  <script src='https://npmcdn.com/mapbox-gl-circle/dist/mapbox-gl-circle.min.js'></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
+</head>
+<div class="card" > 
+  <div [hidden]="this.showbool == false">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Sites Table </div>
+        
+    <table class="table table-striped">
+        <thead>
+            <tr><th>Site</th><th>Description</th><th>Location</th><th>Actions</th></tr>
+        </thead>
+          <tbody>
+          
+            <tr *ngFor="let i of allsites">
+            
+                <td>{{i.area}}</td>
+                <td>{{i.description}}</td>
+                <td><i ><img style="width: 40px;" (click)="marker2(i.lattitude,i.longitude)" src="assets/img/map.png"></i> </td>
+                <td> <i class="cil-pencil" (click)="SiteSelection(i,i._id)"></i>    <i class="cil-delete" (click)="delete(i._id)" style="margin-left: 10px;"></i></td>
+                 
+                
+                <!-- <td><button type="button" aria-pressed="true" (click)="delete(i._id)" class="btn btn-block btn-danger active">Delete</button></td> -->
+                <!-- <td><i (click)="delete(i._id)" class="fa fa-times-rectangle-o fa-lg mt-4"></i><br><span class="text-muted"></span></td> -->
+            </tr>
+           
+          </tbody>
+       </table>
+       </div>
+       <br>
+       <div [hidden]="this.show == true" style="width: 100%;">
+          
+        <div id="map-mapboxxxxxxx2" style=" height: 250px;" >
+
+        </div>
+        <button type="button" (click)="hidemap()" class="btn btn-block btn-warning">Hide</button>
+     </div>
+       <!-- <div [hidden]="this.verif == false" class="row" style="width: 100%;margin-top: -30%;"> -->
+      <!-- <div style="width: 100% ;align-self: center;"> -->
+        <div [hidden]="this.updatebool == false" class="center" style="margin-left: 10%;margin-right: 10%;">
+       
+        <div class="col-md-12" style="margin-top:10px;width: 100%"  >
+    
+      
+         
+          <!-- <div *ngIf=""> -->
+            <div>
+              <br>
+          <form  class="form-grp"   [formGroup]="siteform" >
+            <div class="card">
+              <div class="card-header">
+                <strong>Update your site</strong>
+                <strong><i (click)="Turnback()" class="cil-arrow-thick-from-right" style="float: right;"></i></strong>
+              </div>
+            <div class="modal-body">
+              <div class="area" >
+                <div class="login">
+                  <p>Site</p>
+                  <div class="form-group">
+          
+                    <p><input type="text" class="form-control" id="sitename"
+                      formControlName="sitename"  
+                      placeholder="{{this.selectedSite.area}}"
+                      *ngIf="this.selectedSite != null"
+                              > </p>
+                  </div>
+                 
+                  <p>Site Description  </p>
+                  <div class="form-group">
+                    <p><input type="text" class="form-control" id="description"
+                      formControlName="description" aria-describedby="description" 
+                      *ngIf="this.selectedSite != null"
+                      placeholder="{{this.selectedSite.description}}"
+                       > </p>
+                  </div> <br>
+
+                     <div style="width: 100%;">
+          
+                        <div id="map-mapboxxxxxxx" style=" height: 250px;" >
+     
+                        </div>
+                     </div>
+                     <br>
+
+                  <div class="modal-footer">
+                    <button type="submit" (click)="siteupdate()"  class="btn btn-block btn-success">Save</button>
+                  </div>
+                </div>
+          
+            
+              </div >
+            </div>
+            </div>
+          </form>
+          
+        </div>
+    
+        </div>
+    
+    
+    
+     
+     
+
+
+</div>
+

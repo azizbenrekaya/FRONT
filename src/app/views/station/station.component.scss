@@ -1,0 +1,14 @@
+.mapboxgl-marker {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border:1px solid gray;
+    background-color:lightblue;
+}
+.geocoder {
+    z-index: 1;
+    margin: 20px;
+    }
+    .mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+    }

@@ -1,0 +1,54 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
+  <script src='https://npmcdn.com/mapbox-gl-circle/dist/mapbox-gl-circle.min.js'></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
+</head>
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Devices Table </div>
+        <div class="card-body">
+            <table class="table table-striped">
+            <thead>
+                <tr><th>SensorId</th><th>SensorType</th><th>Status</th><th>Station</th><th>Batterie</th><th>Latest Data</th><th>Action</th></tr>
+            </thead>
+              <tbody>
+              
+                <tr *ngFor="let i of alldev">
+                    <td>{{i.SensorIdentifier}}</td>
+                    <td>{{i.SensorType}}</td>
+                    
+                    <td><span *ngIf="i.data.length != 0;else off " class="badge badge-success">Active</span>
+                      <ng-template #off> <a href="#" class="badge badge-danger">Off</a> </ng-template>
+                    </td>
+                    <td><i *ngIf="Sitename(i._id) != null; " ><img style="width: 40px;" (click)="MarkCite(i._id)" src="assets/img/map.png"></i> {{Sitename(i._id)}}</td>
+                    <td>
+                      {{batterielvl(i._id)}}%
+                      <i  *ngIf="batterielvl(i._id) == '0' ; " class="cil-battery-alert" ></i>
+                      <i  *ngIf="(batterielvl(i._id)) != '0' ; " class="cil-battery-full" style="margin-bottom: -40px;" ></i>
+                      <i  *ngIf="batterielvl(i._id) == '100' ; " class="cil-battery-full" ></i>
+                    </td>
+                    <td>{{latestdata(i._id)}}</td>
+                    <!-- <td><button type="button" aria-pressed="true" (click)="delete(i._id)" class="btn btn-block btn-danger active">Delete</button></td> -->
+                    <td><i (click)="delete(i._id)" class="cil-delete" ></i><br><span class="text-muted"></span></td>
+                </tr>
+               
+              </tbody>
+            
+           </table>
+        
+           <div [hidden]="this.show == true" style="width: 100%;">
+          
+            <div id="map-mapboxxxxxxx" style=" height: 250px;" >
+
+            </div>
+            <button type="button" (click)="hidemap()" class="btn btn-block btn-warning">Hide</button>
+         </div>
